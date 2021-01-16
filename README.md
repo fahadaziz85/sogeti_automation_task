@@ -1,0 +1,1 @@
+# sogeti_automation_task
