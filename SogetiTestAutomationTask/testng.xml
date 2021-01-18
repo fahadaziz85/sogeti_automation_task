@@ -4,6 +4,7 @@
   <test name="Test">
     <classes>
       <class name="com.sogeti.regressiontests.SogetiServicesTestCase1"/>
+      <class name="com.sogeti.regressiontests.ContactUsForm"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
