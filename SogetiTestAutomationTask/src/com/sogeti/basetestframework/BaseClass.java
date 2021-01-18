@@ -19,7 +19,7 @@ public class BaseClass {
 
 	@AfterClass
 	public void afterClass() {
-		driver.quit();
+		//driver.quit();
 	}
 	
 	public WebDriver getDriver() {

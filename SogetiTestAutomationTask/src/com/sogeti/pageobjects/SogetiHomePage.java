@@ -1,5 +1,8 @@
 package com.sogeti.pageobjects;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import org.openqa.selenium.By;
@@ -7,11 +10,10 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.server.handler.SendKeys;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import com.sogeti.basetestframework.BasePage;
@@ -22,7 +24,7 @@ public class SogetiHomePage extends BasePage {
 	public SogetiHomePage(WebDriver driver) {
 		super(driver);
 	}
-	// UI Elements
+	// UI Elements / Locators
 	@FindBy(className = "level2")
 	private WebElement servicesLink;
 	@FindBy(linkText = "Automation")
@@ -36,12 +38,19 @@ public class SogetiHomePage extends BasePage {
 	//Cuntry selector
 	@FindBy(className = "FormSelection")
 	private WebElement selectCountry;
-	// Checkbox
+	// Checkbox I Agree
 	@FindBy(className = "FormChoice__Input--Checkbox")
 	private WebElement iAgreeCheckBox;
 	// Submit Button
 	@FindBy(name = "submit")
 	private WebElement submitBtn;
+	
+	// Country List drop box
+	
+	@FindBy(className = "sprite-globe")
+	private WebElement worldwide;
+	@FindBy(className = "country-list") 
+	private WebElement countriesList;
 
 	public void acceptCookies() {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -158,6 +167,73 @@ public class SogetiHomePage extends BasePage {
 		boolean messageDisplayed = successMessage.getAttribute("innerHTML").equals(thankyouMessage);
 		Assert.assertEquals(messageDisplayed, true, "Thank you message is not displayed or not correct");
 		
+	}
+	
+	// Methods for verifying country links
+	
+	public void validateCountriesLinks() {
+		worldwide.click();
+		  
+		driver.switchTo().defaultContent();
+		waitForElementToAppear(By.className("country-list"));
+		System.out.println("statement executed");
+		List<String> countriesLinks = new ArrayList<String>();
+	//	"//a[@href='/docs/configuration']"
+		countriesLinks.add("//a[@href='https://www.sogeti.be/']");
+		countriesLinks.add("//a[@href='https://www.sogeti.fi/']");
+		countriesLinks.add("//a[@href='https://www.fr.sogeti.com/']");
+		countriesLinks.add("//a[@href='https://www.sogeti.de/']");
+		countriesLinks.add("//a[@href='https://www.sogeti.ie/']");
+		countriesLinks.add("//a[@href='https://www.sogeti.lu']");
+		countriesLinks.add("//a[@href='https://www.sogeti.nl/']");
+		countriesLinks.add("//a[@href='https://www.sogeti.no/']");
+		countriesLinks.add("//a[@href='https://www.sogeti.es/']");
+		countriesLinks.add("//a[@href='https://www.sogeti.se/']");
+		countriesLinks.add("//a[@href='https://www.uk.sogeti.com/']");
+		countriesLinks.add("//a[@href='https://www.us.sogeti.com/']");
+		
+		List<String> expectedTitles = new ArrayList<String>();
+		expectedTitles.add("Sogeti Belgium");
+		expectedTitles.add("Sogeti Finland");
+		expectedTitles.add("Sogeti France");
+		expectedTitles.add("Sogeti Deutschland GmbH – Beratungsdienstleistungen");
+		expectedTitles.add("Sogeti Ireland");
+		expectedTitles.add("Sogeti Luxembourg");
+		expectedTitles.add("We Make Technology Work | Sogeti");
+		expectedTitles.add("Sogeti Norge");
+		expectedTitles.add("Sogeti Espa");
+		expectedTitles.add("Sogeti Sverige");
+		expectedTitles.add("Sogeti UK | Software Testing Services, Digital Services, DevOps Services, DevOps Consultancy, Testing Consultancy");
+		expectedTitles.add("Sogeti USA");
+		
+		Iterator i = expectedTitles.iterator(); 
+		Iterator j = countriesLinks.iterator();
+		String winHandleBefore = driver.getWindowHandle();
+		while (i.hasNext() && j.hasNext()) {
+			countriesList.findElement(By.xpath((String) j.next())).click();
+			getWindowsHandle();
+			
+			//acceptCookies();
+			String actualTitle = driver.getTitle();
+			String expectedTitle = (String) i.next();
+			boolean expectedResult = actualTitle.contains(expectedTitle);
+			Assert.assertEquals(true, expectedResult, "Title does not match");
+			driver.close();
+			driver.switchTo().window(winHandleBefore);
+			
+		}
+		
+		
+		
+		
+	}
+	
+	protected void getWindowsHandle() {
+		
+		String winHandleBefore = driver.getWindowHandle();
+        for(String winHandle : driver.getWindowHandles()){
+            driver.switchTo().window(winHandle);
+        }
 	}
 	
 	protected String getSaltString(int strLength) {
