@@ -212,8 +212,6 @@ public class SogetiHomePage extends BasePage {
 		while (i.hasNext() && j.hasNext()) {
 			countriesList.findElement(By.xpath((String) j.next())).click();
 			getWindowsHandle();
-			
-			//acceptCookies();
 			String actualTitle = driver.getTitle();
 			String expectedTitle = (String) i.next();
 			boolean expectedResult = actualTitle.contains(expectedTitle);
