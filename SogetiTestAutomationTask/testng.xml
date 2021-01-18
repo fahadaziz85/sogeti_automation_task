@@ -5,6 +5,7 @@
     <classes>
       <class name="com.sogeti.regressiontests.SogetiServicesTestCase1"/>
       <class name="com.sogeti.regressiontests.ContactUsForm"/>
+      <class name="com.sogeti.regressiontests.VerifyCountryLinks"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
