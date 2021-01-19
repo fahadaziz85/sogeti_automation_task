@@ -5,6 +5,7 @@
 		a: Eclipse IDE
 		b: TestNG plugin for eclipse
 		c: Maven plugin for eclipse
+		d: Chrome driver
     
 2: Clone or Download the project in your local machine
 
