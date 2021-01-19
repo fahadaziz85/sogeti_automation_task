@@ -12,6 +12,8 @@ public class BaseClass {
 
 	@BeforeClass
 	public void beforeClass() {
+		//Change the path of the Chrome driver to your local machine Chrome driver
+		// For Windows Machine add .exe at the end of the chromedriver
 		System.setProperty("webdriver.chrome.driver", "/Users/fahadaziz/Downloads/Softwares/chromedriver/chromedriver"); //  
 		driver = new ChromeDriver();
 		driver.get("http://www.sogeti.com");
